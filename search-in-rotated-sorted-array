@@ -1,0 +1,32 @@
+class Solution {
+    public int search(int[] nums, int target) {
+        int low = 0, high = nums.length - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (nums[mid] == target) {
+                return mid;
+            }
+
+            // Determine which side is sorted
+            if (nums[low] <= nums[mid]) {
+                // Left side is sorted
+                if (target >= nums[low] && target < nums[mid]) {
+                    high = mid - 1; // Target is in the left sorted part
+                } else {
+                    low = mid + 1;  // Target is in the right part
+                }
+            } else {
+                // Right side is sorted
+                if (target > nums[mid] && target <= nums[high]) {
+                    low = mid + 1;  // Target is in the right sorted part
+                } else {
+                    high = mid - 1; // Target is in the left part
+                }
+            }
+        }
+
+        return -1; // Target not found
+    }
+}
